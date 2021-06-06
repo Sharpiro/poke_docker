@@ -3,17 +3,10 @@ FROM ubuntu:latest
 WORKDIR /app
 
 RUN apt-get update
-# RUN apt-get install -y build-essential git libpng-dev
-# RUN apt-get install -y build-essential binutils-arm-none-eabi git libpng-dev
-RUN apt-get install -y build-essential gdebi-core git libpng-dev
-RUN apt-get install -y curl
+RUN apt-get install -y build-essential gdebi-core git libpng-dev curl
 
 RUN curl -sLO https://github.com/devkitPro/pacman/releases/latest/download/devkitpro-pacman.amd64.deb
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata
-# RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true
-# RUN echo tzdata tzdata/Areas select America >> tz_file
-# RUN echo tzdata tzdata/Zones/Europe select New_York >> tz_file
-# RUN debconf-set-selections tz_file
 
 ENV DEVKITPRO=/opt/devkitpro
 ENV DEVKITARM=$DEVKITPRO/devkitARM
@@ -26,11 +19,8 @@ RUN git clone https://github.com/pret/agbcc
 RUN git clone https://github.com/pret/pokefirered
 
 WORKDIR /app/agbcc
-# RUN apt-get install -y binutils-arm-none-eabi
 RUN sh build.sh
 RUN sh install.sh ../pokefirered
 
 WORKDIR /app/pokefirered
 RUN make compare -j$(nproc)
-# RUN make compare
-# RUN make
