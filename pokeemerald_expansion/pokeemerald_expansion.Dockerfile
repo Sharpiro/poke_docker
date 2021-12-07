@@ -2,8 +2,12 @@ FROM ubuntu:latest
 
 WORKDIR /app
 
-RUN apt-get update
-RUN apt-get install -y build-essential binutils-arm-none-eabi git libpng-dev
+RUN apt-get update && apt-get install -y \
+  build-essential \
+  binutils-arm-none-eabi \
+  git \
+  libpng-dev
+
 
 RUN git clone https://github.com/pret/agbcc
 RUN git clone https://github.com/rh-hideout/pokeemerald-expansion pokeemerald
